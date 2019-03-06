@@ -203,51 +203,51 @@ public class PantallaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(1);
     }//GEN-LAST:event_monst1MouseClicked
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(2);
     }//GEN-LAST:event_monst2MouseClicked
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(3);
     }//GEN-LAST:event_monst3MouseClicked
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(4);
     }//GEN-LAST:event_monst4MouseClicked
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(8);
     }//GEN-LAST:event_monst8MouseClicked
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(7);
     }//GEN-LAST:event_monst7MouseClicked
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(6);
     }//GEN-LAST:event_monst6MouseClicked
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(5);
     }//GEN-LAST:event_monst5MouseClicked
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(9);
     }//GEN-LAST:event_monst9MouseClicked
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(10);
     }//GEN-LAST:event_monst10MouseClicked
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(11);
     }//GEN-LAST:event_monst11MouseClicked
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
-        // TODO add your handling code here:
+        monstruoHit(12);
     }//GEN-LAST:event_monst12MouseClicked
 
     /**
