@@ -33,7 +33,7 @@
     <Component class="javax.swing.JLabel" name="monst1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst1" noResource="true"/>
@@ -50,7 +50,7 @@
     <Component class="javax.swing.JLabel" name="monst5">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst5" noResource="true"/>
@@ -67,7 +67,7 @@
     <Component class="javax.swing.JLabel" name="monst2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst2" noResource="true"/>
@@ -84,7 +84,7 @@
     <Component class="javax.swing.JLabel" name="monst9">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst9" noResource="true"/>
@@ -101,7 +101,7 @@
     <Component class="javax.swing.JLabel" name="monst10">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst10" noResource="true"/>
@@ -118,7 +118,7 @@
     <Component class="javax.swing.JLabel" name="monst6">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst6" noResource="true"/>
@@ -135,7 +135,7 @@
     <Component class="javax.swing.JLabel" name="monst3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst3" noResource="true"/>
@@ -152,7 +152,7 @@
     <Component class="javax.swing.JLabel" name="monst7">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst7" noResource="true"/>
@@ -169,7 +169,7 @@
     <Component class="javax.swing.JLabel" name="monst11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst11" noResource="true"/>
@@ -186,7 +186,7 @@
     <Component class="javax.swing.JLabel" name="monst8">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst8" noResource="true"/>
@@ -203,7 +203,7 @@
     <Component class="javax.swing.JLabel" name="monst12">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst12" noResource="true"/>
@@ -220,7 +220,7 @@
     <Component class="javax.swing.JLabel" name="monst4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/monstruo.png"/>
+          <Image iconType="3" name="/cliente/imagenes/monstruo.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="monst4" noResource="true"/>
@@ -237,7 +237,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/cliente/fondoBig.png"/>
+          <Image iconType="3" name="/cliente/imagenes/fondoBig.png"/>
         </Property>
       </Properties>
       <Constraints>

@@ -29,6 +29,10 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst11.setVisible(false);
         monst12.setVisible(false);
     }
+    
+    public void monstruoHit(int monstruoNum) {
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,7 +63,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(null);
 
-        monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst1.setEnabled(false);
         monst1.setName("monst1"); // NOI18N
         monst1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -70,7 +74,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst1);
         monst1.setBounds(110, 160, 50, 50);
 
-        monst5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst5.setEnabled(false);
         monst5.setName("monst5"); // NOI18N
         monst5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -81,7 +85,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst5);
         monst5.setBounds(110, 210, 50, 50);
 
-        monst2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst2.setEnabled(false);
         monst2.setName("monst2"); // NOI18N
         monst2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,7 +96,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst2);
         monst2.setBounds(230, 160, 50, 50);
 
-        monst9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst9.setEnabled(false);
         monst9.setName("monst9"); // NOI18N
         monst9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,7 +107,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst9);
         monst9.setBounds(110, 260, 50, 50);
 
-        monst10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst10.setEnabled(false);
         monst10.setName("monst10"); // NOI18N
         monst10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,7 +118,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst10);
         monst10.setBounds(230, 260, 50, 50);
 
-        monst6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst6.setEnabled(false);
         monst6.setName("monst6"); // NOI18N
         monst6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -125,7 +129,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst6);
         monst6.setBounds(230, 210, 50, 50);
 
-        monst3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst3.setEnabled(false);
         monst3.setName("monst3"); // NOI18N
         monst3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -136,7 +140,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst3);
         monst3.setBounds(360, 160, 50, 50);
 
-        monst7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst7.setEnabled(false);
         monst7.setName("monst7"); // NOI18N
         monst7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,7 +151,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst7);
         monst7.setBounds(360, 210, 50, 50);
 
-        monst11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst11.setEnabled(false);
         monst11.setName("monst11"); // NOI18N
         monst11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,7 +162,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst11);
         monst11.setBounds(360, 260, 50, 50);
 
-        monst8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst8.setEnabled(false);
         monst8.setName("monst8"); // NOI18N
         monst8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,7 +173,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst8);
         monst8.setBounds(470, 210, 50, 50);
 
-        monst12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst12.setEnabled(false);
         monst12.setName("monst12"); // NOI18N
         monst12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -180,7 +184,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst12);
         monst12.setBounds(470, 260, 50, 50);
 
-        monst4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/monstruo.png"))); // NOI18N
+        monst4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst4.setEnabled(false);
         monst4.setName("monst4"); // NOI18N
         monst4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -191,7 +195,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst4);
         monst4.setBounds(470, 160, 50, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/fondoBig.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoBig.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 610, 340);
 

@@ -77,7 +77,8 @@ public class InicioJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Establece conexión con servidor
+        //Crea cliente que establece conexión con servidor
+        Cliente nuevo = new Cliente();
         PantallaJuego juego = new PantallaJuego();
         juego.setVisible(true);
         this.setVisible(false);
