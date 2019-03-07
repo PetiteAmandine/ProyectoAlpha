@@ -5,16 +5,6 @@
  */
 package cliente;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 /**
  *
  * @author velasam
@@ -38,6 +28,8 @@ public class InicioJuego extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -61,7 +53,19 @@ public class InicioJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(110, 110, 110, 31);
+        jButton1.setBounds(110, 160, 110, 31);
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 153));
+        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 153));
+        jLabel3.setText("Nombre:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(60, 120, 60, 17);
+
+        username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        username.setOpaque(false);
+        getContentPane().add(username);
+        username.setBounds(120, 120, 160, 23);
 
         jLabel2.setFont(new java.awt.Font("Janda Manatee Solid", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 153));
@@ -69,7 +73,7 @@ public class InicioJuego extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(70, 10, 200, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/fondoSmol.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoSmol.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 340, 200);
 
@@ -77,8 +81,10 @@ public class InicioJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Crea cliente que establece conexión con servidor
-        Cliente nuevo = new Cliente();
+        //Establece conexión con servidor
+        //Envía por RMI nombre y verifica si es válido o no
+        //Crea conexiones TCP y UDP
+        //Tras el éxito de las conexiones abre pantalla de juego
         PantallaJuego juego = new PantallaJuego();
         juego.setVisible(true);
         this.setVisible(false);
@@ -123,5 +129,7 @@ public class InicioJuego extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

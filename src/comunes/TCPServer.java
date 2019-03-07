@@ -1,4 +1,4 @@
-package agendatcpsockets;
+package comunes;
 
 /**
  *

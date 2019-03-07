@@ -43,6 +43,9 @@ public class PantallaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        victimas = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
         monst1 = new javax.swing.JLabel();
         monst5 = new javax.swing.JLabel();
         monst2 = new javax.swing.JLabel();
@@ -62,6 +65,24 @@ public class PantallaJuego extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(613, 368));
         setResizable(false);
         getContentPane().setLayout(null);
+
+        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 153));
+        jLabel2.setText("victims");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(530, 20, 70, 17);
+
+        victimas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        victimas.setForeground(new java.awt.Color(255, 255, 153));
+        victimas.setText("Monstruos:");
+        getContentPane().add(victimas);
+        victimas.setBounds(440, 20, 80, 17);
+
+        username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 153));
+        username.setText("user");
+        getContentPane().add(username);
+        username.setBounds(20, 20, 80, 17);
 
         monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst1.setEnabled(false);
@@ -287,6 +308,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel monst1;
     private javax.swing.JLabel monst10;
     private javax.swing.JLabel monst11;
@@ -299,5 +321,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     private javax.swing.JLabel monst7;
     private javax.swing.JLabel monst8;
     private javax.swing.JLabel monst9;
+    private javax.swing.JLabel username;
+    private javax.swing.JLabel victimas;
     // End of variables declaration//GEN-END:variables
 }
