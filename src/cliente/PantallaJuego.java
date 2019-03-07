@@ -10,11 +10,13 @@ package cliente;
  * @author velasam
  */
 public class PantallaJuego extends javax.swing.JFrame {
+    
+    private String user;
 
     /**
      * Creates new form PantallaJuego
      */
-    public PantallaJuego() {
+    public PantallaJuego(String user) {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -28,10 +30,15 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst10.setVisible(false);
         monst11.setVisible(false);
         monst12.setVisible(false);
+        this.user = user;
+        username.setText(user);
     }
     
-    public void monstruoHit(int monstruoNum) {
-        
+    public void monstruoHit(javax.swing.JLabel monst) {
+        monst.setEnabled(false);
+        monst.setVisible(false);
+        //Envia mensaje TCP para indicar golpe
+        //Si el golpe fue exitoso (recibe el numero de victimas) actualiza cuenta de victimas
     }
 
     /**
@@ -43,8 +50,8 @@ public class PantallaJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         victimas = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
         monst1 = new javax.swing.JLabel();
         monst5 = new javax.swing.JLabel();
@@ -59,6 +66,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst12 = new javax.swing.JLabel();
         monst4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Monster Haven");
@@ -66,17 +74,18 @@ public class PantallaJuego extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(null);
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 153));
-        jLabel2.setText("victims");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(530, 20, 70, 17);
-
         victimas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         victimas.setForeground(new java.awt.Color(255, 255, 153));
-        victimas.setText("Monstruos:");
+        victimas.setText("0");
+        victimas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         getContentPane().add(victimas);
-        victimas.setBounds(440, 20, 80, 17);
+        victimas.setBounds(530, 20, 70, 17);
+
+        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 153));
+        jLabel2.setText("Monstruos:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(440, 20, 80, 17);
 
         username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 153));
@@ -220,95 +229,68 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 610, 340);
 
+        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 153));
+        jLabel3.setText("user");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(20, 20, 80, 17);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
-        monstruoHit(1);
+        monstruoHit(monst1);
     }//GEN-LAST:event_monst1MouseClicked
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
-        monstruoHit(2);
+        monstruoHit(monst2);
     }//GEN-LAST:event_monst2MouseClicked
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
-        monstruoHit(3);
+        monstruoHit(monst3);
     }//GEN-LAST:event_monst3MouseClicked
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
-        monstruoHit(4);
+        monstruoHit(monst4);
     }//GEN-LAST:event_monst4MouseClicked
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
-        monstruoHit(8);
+        monstruoHit(monst8);
     }//GEN-LAST:event_monst8MouseClicked
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
-        monstruoHit(7);
+        monstruoHit(monst7);
     }//GEN-LAST:event_monst7MouseClicked
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
-        monstruoHit(6);
+        monstruoHit(monst6);
     }//GEN-LAST:event_monst6MouseClicked
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
-        monstruoHit(5);
+        monstruoHit(monst5);
     }//GEN-LAST:event_monst5MouseClicked
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
-        monstruoHit(9);
+        monstruoHit(monst9);
     }//GEN-LAST:event_monst9MouseClicked
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
-        monstruoHit(10);
+        monstruoHit(monst10);
     }//GEN-LAST:event_monst10MouseClicked
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
-        monstruoHit(11);
+        monstruoHit(monst11);
     }//GEN-LAST:event_monst11MouseClicked
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
-        monstruoHit(12);
+        monstruoHit(monst12);
     }//GEN-LAST:event_monst12MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaJuego().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel monst1;
     private javax.swing.JLabel monst10;
     private javax.swing.JLabel monst11;

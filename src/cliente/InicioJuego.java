@@ -27,6 +27,7 @@ public class InicioJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        error = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
@@ -41,11 +42,17 @@ public class InicioJuego extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(333, 200));
         getContentPane().setLayout(null);
 
+        error.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
+        error.setForeground(new java.awt.Color(255, 255, 153));
+        getContentPane().add(error);
+        error.setBounds(150, 87, 130, 20);
+
         jButton1.setBackground(new java.awt.Color(255, 255, 153));
         jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jButton1.setText("¡Empezar!");
         jButton1.setAlignmentY(0.0F);
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        jButton1.setBorderPainted(false);
         jButton1.setName("botonInicio"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,10 +69,18 @@ public class InicioJuego extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(60, 120, 60, 17);
 
+        username.setBackground(new java.awt.Color(255, 255, 255, 0));
         username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 153));
+        username.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         username.setOpaque(false);
+        username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameActionPerformed(evt);
+            }
+        });
         getContentPane().add(username);
-        username.setBounds(120, 120, 160, 23);
+        username.setBounds(130, 110, 160, 30);
 
         jLabel2.setFont(new java.awt.Font("Janda Manatee Solid", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 153));
@@ -85,10 +100,18 @@ public class InicioJuego extends javax.swing.JFrame {
         //Envía por RMI nombre y verifica si es válido o no
         //Crea conexiones TCP y UDP
         //Tras el éxito de las conexiones abre pantalla de juego
-        PantallaJuego juego = new PantallaJuego();
-        juego.setVisible(true);
-        this.setVisible(false);
+        if (username.getText().equals("")) {
+            error.setText("¡Debes elegir un nombre!");
+        } else {
+            PantallaJuego juego = new PantallaJuego(username.getText());
+            juego.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +149,7 @@ public class InicioJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel error;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
