@@ -5,7 +5,7 @@
  */
 package comunes.client;
 
-import interfaces.Compute;
+import comunes.Registro;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -19,29 +19,25 @@ import java.util.logging.Logger;
  * @author Eduardo
  */
 public class ComputeClient {
-
-    public static void main(String[] args) throws RemoteException {
-        
+    
+    public boolean registra(String jugador) {
         try {
-            System.setProperty("java.security.policy", "file:/C:/Users/Eduardo/Documents/NetBeansProjects/JavaRMI/src/client/client.policy");
+            System.setProperty("java.security.policy", "C:/Users/velasam/Documents/ITAM/8vo Semestre/Sistemas Distribuidos/ProyectoAlpha/src/comunes/client/client.policy");
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }
-            
-            String name = "Compute";
             Registry registry = LocateRegistry.getRegistry("localhost");
-            
-            Compute comp = (Compute) registry.lookup(name);
-            
-            System.out.println("3*3=" + comp.square(3));
-            System.out.println("3*3*3=" + comp.power(3, 3));
-            
+            Registro reg = (Registro) registry.lookup("Registro");
+            boolean succ = reg.registraJugador(jugador);
+            return succ;
         } catch (NotBoundException ex) {
             Logger.getLogger(ComputeClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AccessException ex) {
             Logger.getLogger(ComputeClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ComputeClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        return false;
     }
     
 }

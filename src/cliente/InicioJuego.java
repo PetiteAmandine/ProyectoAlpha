@@ -5,6 +5,8 @@
  */
 package cliente;
 
+import comunes.client.ComputeClient;
+
 /**
  *
  * @author velasam
@@ -98,14 +100,22 @@ public class InicioJuego extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Establece conexión con servidor
         //Envía por RMI nombre y verifica si es válido o no
+        ComputeClient cc;
+        
         //Crea conexiones TCP y UDP
         //Tras el éxito de las conexiones abre pantalla de juego
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
         } else {
-            PantallaJuego juego = new PantallaJuego(username.getText());
-            juego.setVisible(true);
-            this.setVisible(false);
+            cc = new ComputeClient();
+            if (cc.registra(username.getText())) {
+                PantallaJuego juego = new PantallaJuego(username.getText());
+                juego.setVisible(true);
+                this.setVisible(false);
+            }
+            else {
+                error.setText("Por favor elige otro nombre");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
