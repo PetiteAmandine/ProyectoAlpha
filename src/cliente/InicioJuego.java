@@ -5,7 +5,6 @@
  */
 package cliente;
 
-import comunes.client.ComputeClient;
 
 /**
  *
@@ -38,7 +37,7 @@ public class InicioJuego extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Monster Haven");
-        setMinimumSize(new java.awt.Dimension(333, 225));
+        setMinimumSize(new java.awt.Dimension(333, 235));
         setPreferredSize(new java.awt.Dimension(333, 200));
         setResizable(false);
         setSize(new java.awt.Dimension(333, 200));
@@ -50,7 +49,7 @@ public class InicioJuego extends javax.swing.JFrame {
         error.setBounds(150, 87, 130, 20);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 153));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         jButton1.setText("¡Empezar!");
         jButton1.setAlignmentY(0.0F);
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
@@ -65,11 +64,11 @@ public class InicioJuego extends javax.swing.JFrame {
         jButton1.setBounds(110, 160, 110, 31);
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 153));
-        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 153));
         jLabel3.setText("Nombre:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(60, 120, 60, 17);
+        jLabel3.setBounds(50, 120, 70, 18);
 
         username.setBackground(new java.awt.Color(255, 255, 255, 0));
         username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -84,11 +83,11 @@ public class InicioJuego extends javax.swing.JFrame {
         getContentPane().add(username);
         username.setBounds(130, 110, 160, 30);
 
-        jLabel2.setFont(new java.awt.Font("Janda Manatee Solid", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Retro Gaming", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 153));
         jLabel2.setText("MONSTER HAVEN");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 10, 200, 50);
+        jLabel2.setBounds(60, 10, 240, 50);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoSmol.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -100,15 +99,15 @@ public class InicioJuego extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Establece conexión con servidor
         //Envía por RMI nombre y verifica si es válido o no
-        ComputeClient cc;
+        ClienteRegistro cr;
         
         //Crea conexiones TCP y UDP
         //Tras el éxito de las conexiones abre pantalla de juego
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
         } else {
-            cc = new ComputeClient();
-            if (cc.registra(username.getText())) {
+            cr = new ClienteRegistro();
+            if (cr.registra(username.getText())) {
                 PantallaJuego juego = new PantallaJuego(username.getText());
                 juego.setVisible(true);
                 this.setVisible(false);
