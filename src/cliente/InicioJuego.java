@@ -5,6 +5,8 @@
  */
 package cliente;
 
+import comunes.Conexiones;
+
 
 /**
  *
@@ -71,7 +73,7 @@ public class InicioJuego extends javax.swing.JFrame {
         jLabel3.setBounds(50, 120, 70, 18);
 
         username.setBackground(new java.awt.Color(255, 255, 255, 0));
-        username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        username.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 153));
         username.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         username.setOpaque(false);
@@ -100,15 +102,16 @@ public class InicioJuego extends javax.swing.JFrame {
         //Establece conexión con servidor
         //Envía por RMI nombre y verifica si es válido o no
         ClienteRegistro cr;
-        
+        Conexiones con;
         //Crea conexiones TCP y UDP
         //Tras el éxito de las conexiones abre pantalla de juego
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
         } else {
             cr = new ClienteRegistro();
-            if (cr.registra(username.getText())) {
-                PantallaJuego juego = new PantallaJuego(username.getText());
+            con = cr.registra(username.getText());
+            if (con != null) {
+                PantallaJuego juego = new PantallaJuego(con);
                 juego.setVisible(true);
                 this.setVisible(false);
             }

@@ -14,6 +14,6 @@ import java.rmi.RemoteException;
  */
 public interface Registro extends Remote {
     
-    public boolean registraJugador(String nombre) throws RemoteException;
+    public Conexiones registraJugador(String nombre) throws RemoteException;
     
 }

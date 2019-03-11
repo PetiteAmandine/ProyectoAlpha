@@ -5,18 +5,28 @@
  */
 package cliente;
 
+import comunes.Conexiones;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.SocketException;
+
 /**
  *
  * @author velasam
  */
 public class PantallaJuego extends javax.swing.JFrame {
-    
-    private String user;
+
+    private Conexiones con;
+    private MulticastSocket ms;
 
     /**
      * Creates new form PantallaJuego
+     *
+     * @param con Clase que contiene datos para establecer conexiones
      */
-    public PantallaJuego(String user) {
+    public PantallaJuego(Conexiones con) {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -30,10 +40,36 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst10.setVisible(false);
         monst11.setVisible(false);
         monst12.setVisible(false);
-        this.user = user;
-        username.setText(user);
+        username.setText(con.getUser());
+        ms = null;
+        //creaConexionUDP();
     }
-    
+
+    public void creaConexionUDP() {
+        try {
+            InetAddress group = InetAddress.getByName(con.getMulticastIP());
+            ms = new MulticastSocket(con.getMulticastPort());
+            ms.joinGroup(group);
+
+            byte[] buffer = new byte[1000];
+            DatagramPacket messageIn = new DatagramPacket(buffer, buffer.length);
+            ms.receive(messageIn);
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        }
+    }
+
+    public int cierraConexion() {
+        System.out.println("Saliendo");
+        return 0;
+    }
+
+    public void monstruoRecieve() {
+
+    }
+
     public void monstruoHit(javax.swing.JLabel monst) {
         monst.setEnabled(false);
         monst.setVisible(false);
@@ -74,24 +110,24 @@ public class PantallaJuego extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(null);
 
-        victimas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        victimas.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         victimas.setForeground(new java.awt.Color(255, 255, 153));
         victimas.setText("0");
         victimas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         getContentPane().add(victimas);
-        victimas.setBounds(530, 20, 70, 17);
+        victimas.setBounds(530, 20, 70, 18);
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 153));
         jLabel2.setText("Monstruos:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(440, 20, 80, 17);
+        jLabel2.setBounds(420, 20, 100, 18);
 
-        username.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        username.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 153));
         username.setText("user");
         getContentPane().add(username);
-        username.setBounds(20, 20, 80, 17);
+        username.setBounds(20, 20, 320, 18);
 
         monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
         monst1.setEnabled(false);
@@ -233,7 +269,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 153));
         jLabel3.setText("user");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 20, 80, 17);
+        jLabel3.setBounds(20, 20, 80, 19);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

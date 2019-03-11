@@ -5,7 +5,7 @@
  */
 package cliente;
 
-import comunes.Registro;
+import comunes.*;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -20,7 +20,8 @@ import java.util.logging.Logger;
  */
 public class ClienteRegistro {
     
-    public boolean registra(String jugador) {
+    public Conexiones registra(String jugador) {
+        Conexiones con = null;
         try {
             System.setProperty("java.security.policy", "C:/Users/Amandine/Documents/ITAM/8vo Semestre/Sistemas Distribuidos/ProyectoAlpha/src/cliente/client.policy");
             if (System.getSecurityManager() == null) {
@@ -28,8 +29,7 @@ public class ClienteRegistro {
             }
             Registry registry = LocateRegistry.getRegistry("localhost");
             Registro reg = (Registro) registry.lookup("Registro");
-            boolean succ = reg.registraJugador(jugador);
-            return succ;
+            con = reg.registraJugador(jugador);
         } catch (NotBoundException ex) {
             Logger.getLogger(ClienteRegistro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AccessException ex) {
@@ -37,7 +37,7 @@ public class ClienteRegistro {
         } catch (RemoteException ex) {
             Logger.getLogger(ClienteRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return con;
     }
     
 }
