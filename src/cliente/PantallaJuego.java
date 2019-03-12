@@ -5,12 +5,15 @@
  */
 package cliente;
 
-import comunes.Conexiones;
+import comunes.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
+import java.nio.ByteBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +29,7 @@ public class PantallaJuego extends javax.swing.JFrame {
      *
      * @param con Clase que contiene datos para establecer conexiones
      */
-    public PantallaJuego(Conexiones con) {
+    public PantallaJuego(Conexiones con) throws InterruptedException {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -40,34 +43,46 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst10.setVisible(false);
         monst11.setVisible(false);
         monst12.setVisible(false);
+        this.con = con;
         username.setText(con.getUser());
-        ms = null;
-        //creaConexionUDP();
+        ms = creaConexionUDP();
     }
 
-    public void creaConexionUDP() {
+    public MulticastSocket creaConexionUDP() {
+        MulticastSocket ms = null;
         try {
             InetAddress group = InetAddress.getByName(con.getMulticastIP());
             ms = new MulticastSocket(con.getMulticastPort());
             ms.joinGroup(group);
-
-            byte[] buffer = new byte[1000];
-            DatagramPacket messageIn = new DatagramPacket(buffer, buffer.length);
-            ms.receive(messageIn);
         } catch (SocketException e) {
             System.out.println("Socket: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("IO: " + e.getMessage());
         }
+        return ms;
     }
 
-    public int cierraConexion() {
-        System.out.println("Saliendo");
-        return 0;
-    }
-
-    public void monstruoRecieve() {
-
+    public void monstruoRecieve() throws InterruptedException {
+        byte[] mens = new byte[4];
+        byte[] pos = new byte[4];
+        byte[] tiempo = new byte[4];
+        byte[] yolo = new byte[100];
+        DatagramPacket messageIn;
+        try {
+            while (true) {
+                messageIn = new DatagramPacket(mens, mens.length);
+                ms.receive(messageIn);
+                pos = messageIn.getData();
+                ms.receive(messageIn);
+                tiempo = messageIn.getData();
+                System.out.println(ByteBuffer.wrap(pos).getInt());
+                pintaMonstruo(ByteBuffer.wrap(pos).getInt(), true);
+                Thread.sleep(1000 * ByteBuffer.wrap(tiempo).getInt());
+                pintaMonstruo(ByteBuffer.wrap(pos).getInt(), false);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void monstruoHit(javax.swing.JLabel monst) {
@@ -75,6 +90,47 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst.setVisible(false);
         //Envia mensaje TCP para indicar golpe
         //Si el golpe fue exitoso (recibe el numero de victimas) actualiza cuenta de victimas
+    }
+    
+    public void pintaMonstruo(int num, boolean pinta) {
+        switch (num) {
+            case 1: monst1.setVisible(pinta);
+                    monst1.setEnabled(pinta);
+                    break;
+            case 2: monst2.setVisible(pinta);
+                    monst2.setEnabled(pinta);
+                    break;
+            case 3: monst3.setVisible(pinta);
+                    monst3.setEnabled(pinta);
+                    break;
+            case 4: monst4.setVisible(pinta);
+                    monst4.setEnabled(pinta);
+                    break;
+            case 5: monst5.setVisible(pinta);
+                    monst5.setEnabled(pinta);
+                    break;
+            case 6: monst6.setVisible(pinta);
+                    monst6.setEnabled(pinta);
+                    break;
+            case 7: monst7.setVisible(pinta);
+                    monst7.setEnabled(pinta);
+                    break;
+            case 8: monst8.setVisible(pinta);
+                    monst8.setEnabled(pinta);
+                    break;
+            case 9: monst9.setVisible(pinta);
+                    monst9.setEnabled(pinta);
+                    break;
+            case 10: monst10.setVisible(pinta);
+                    monst10.setEnabled(pinta);
+                    break;
+            case 11: monst11.setVisible(pinta);
+                    monst11.setEnabled(pinta);
+                    break;
+            case 12: monst12.setVisible(pinta);
+                    monst12.setEnabled(pinta);
+                    break;
+        }
     }
 
     /**

@@ -6,6 +6,8 @@
 package cliente;
 
 import comunes.Conexiones;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -111,9 +113,14 @@ public class InicioJuego extends javax.swing.JFrame {
             cr = new ClienteRegistro();
             con = cr.registra(username.getText());
             if (con != null) {
-                PantallaJuego juego = new PantallaJuego(con);
-                juego.setVisible(true);
-                this.setVisible(false);
+                try {
+                    PantallaJuego juego = new PantallaJuego(con);
+                    juego.setVisible(true);
+                    setVisible(false);
+                    //juego.monstruoRecieve();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(InicioJuego.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else {
                 error.setText("Por favor elige otro nombre");
