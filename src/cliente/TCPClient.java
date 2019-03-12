@@ -1,4 +1,4 @@
-package comunes;
+package cliente;
 
 /**
  *

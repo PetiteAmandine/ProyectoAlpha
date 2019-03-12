@@ -101,12 +101,8 @@ public class InicioJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Establece conexión con servidor
-        //Envía por RMI nombre y verifica si es válido o no
         ClienteRegistro cr;
         Conexiones con;
-        //Crea conexiones TCP y UDP
-        //Tras el éxito de las conexiones abre pantalla de juego
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
         } else {
