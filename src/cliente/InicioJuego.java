@@ -113,7 +113,7 @@ public class InicioJuego extends javax.swing.JFrame {
                     PantallaJuego juego = new PantallaJuego(con);
                     juego.setVisible(true);
                     setVisible(false);
-                    //juego.monstruoRecieve();
+                    juego.monstruoRecieve();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(InicioJuego.class.getName()).log(Level.SEVERE, null, ex);
                 }

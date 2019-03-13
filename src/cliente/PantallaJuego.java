@@ -63,22 +63,28 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
 
     public void monstruoRecieve() throws InterruptedException {
-        byte[] mens = new byte[4];
-        byte[] pos = new byte[4];
-        byte[] tiempo = new byte[4];
-        byte[] yolo = new byte[100];
+        byte[] mens = new byte[100];
+        byte[] res = new byte[100];
+        String pos;
+        String tiempo;
         DatagramPacket messageIn;
         try {
             while (true) {
                 messageIn = new DatagramPacket(mens, mens.length);
                 ms.receive(messageIn);
-                pos = messageIn.getData();
+                res = messageIn.getData();
+                pos = new String(res);
+                pos = pos.trim();
                 ms.receive(messageIn);
-                tiempo = messageIn.getData();
-                System.out.println(ByteBuffer.wrap(pos).getInt());
-                pintaMonstruo(ByteBuffer.wrap(pos).getInt(), true);
-                Thread.sleep(1000 * ByteBuffer.wrap(tiempo).getInt());
-                pintaMonstruo(ByteBuffer.wrap(pos).getInt(), false);
+                res = messageIn.getData();
+                tiempo = new String(res);
+                tiempo = tiempo.trim();
+                System.out.println(pos);
+                System.out.println(tiempo);
+                System.out.println(Integer.parseInt(pos));
+                pintaMonstruo(Integer.parseInt(pos), true);
+                Thread.sleep(1000 * Integer.parseInt(tiempo));
+                pintaMonstruo(Integer.parseInt(pos), false);
             }
         } catch (IOException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);

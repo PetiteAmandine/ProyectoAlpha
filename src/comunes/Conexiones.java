@@ -16,6 +16,7 @@ public class Conexiones implements Serializable {
     private String user;
     private String multicastIP;
     private int multicastPort;
+    private int multicastGroup;
 
     public Conexiones(String user, String multicastIP, int multicastPort) {
         this.user = user;

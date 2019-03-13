@@ -13,8 +13,10 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.rmi.registry.LocateRegistry;
@@ -30,15 +32,13 @@ import java.util.logging.Logger;
 public class InicioServidor implements Registro {
 
     private HashMap<String, Integer> jugadores;
-    private MulticastSocket ms;
-    private InetAddress grupo;
     private final int n = 10;
 
     public InicioServidor() throws RemoteException {
         jugadores = new HashMap<>();
         LocateRegistry.createRegistry(1099);
-        creaEngine();
-        ms = creaMulticast();
+        //creaEngine();
+        //ms = creaMulticast();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class InicioServidor implements Registro {
         }
     }
 
-    public MulticastSocket creaMulticast() {
+    /*public MulticastSocket creaMulticast() {
         MulticastSocket ms = null;
         try {
             grupo = InetAddress.getByName("228.5.6.7");
@@ -81,9 +81,9 @@ public class InicioServidor implements Registro {
             System.out.println("IO: " + e.getMessage());
         }
         return ms;
-    }
+    }*/
 
-    public void enviaMonstruo(InetAddress group) {
+ /*public void enviaMonstruo(InetAddress group) {
         byte[] m;
         DatagramPacket messageOut;
         try {
@@ -94,7 +94,10 @@ public class InicioServidor implements Registro {
                 m = pos.getBytes();
                 messageOut = new DatagramPacket(m, m.length, group, 6789);
                 ms.send(messageOut);
+                System.out.println(pos);
+                System.out.println(tiempo);
                 m = tiempo.getBytes();
+                System.out.println(m);
                 messageOut = new DatagramPacket(m, m.length, group, 6789);
                 ms.send(messageOut);
                 Thread.sleep(7000);
@@ -104,11 +107,56 @@ public class InicioServidor implements Registro {
         } catch (InterruptedException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }*/
+    public static void main(String args[]) throws RemoteException, InterruptedException {
+        InicioServidor me = new InicioServidor();
+        me.creaEngine();
+        try {
+            InetAddress group = InetAddress.getByName("228.5.6.7");
+            MulticastSocket ms = new MulticastSocket(6789);
+            ms.joinGroup(group);
+            while (true) {
+                MonstSender mos = new MonstSender(ms, group);
+                mos.start();
+                Thread.sleep(5000);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public static void main(String args[]) throws RemoteException {
-        InicioServidor me = new InicioServidor();
-        me.enviaMonstruo(me.grupo);
+}
+
+class MonstSender extends Thread {
+
+    DataOutputStream out;
+    MulticastSocket clientSocket;
+    InetAddress group;
+
+    public MonstSender(MulticastSocket aClientSocket, InetAddress aGroup) {
+        clientSocket = aClientSocket;
+        group = aGroup;
+    }
+
+    @Override
+    public void run() {
+        byte[] m;
+        DatagramPacket messageOut;
+        try {
+            Monstruo monst = new Monstruo();
+            String pos = monst.getPosicion() + "";
+            String tiempo = monst.getTiempoVida() + "";
+            m = pos.getBytes();
+            messageOut = new DatagramPacket(m, m.length, group, 6789);
+            clientSocket.send(messageOut);
+            System.out.println(pos);
+            System.out.println(tiempo);
+            m = tiempo.getBytes();
+            messageOut = new DatagramPacket(m, m.length, group, 6789);
+            clientSocket.send(messageOut);
+        } catch (IOException ex) {
+            Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
