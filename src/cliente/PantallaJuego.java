@@ -6,12 +6,13 @@
 package cliente;
 
 import comunes.*;
+import java.io.EOFException;
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.Socket;
 import java.net.SocketException;
-import java.nio.ByteBuffer;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +24,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private Conexiones con;
     private MulticastSocket ms;
+    private Socket s;
 
     /**
      * Creates new form PantallaJuego
@@ -43,9 +45,11 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst10.setVisible(false);
         monst11.setVisible(false);
         monst12.setVisible(false);
+        victoria.setVisible(false);
         this.con = con;
         username.setText(con.getUser());
         ms = creaConexionUDP();
+        s = creaConexionTCP();
     }
 
     public MulticastSocket creaConexionUDP() {
@@ -61,6 +65,18 @@ public class PantallaJuego extends javax.swing.JFrame {
         }
         return ms;
     }
+    
+    public Socket creaConexionTCP() {
+        Socket ts = null;
+        try {
+            ts = new Socket(con.getTcpIP(), con.getTcpPort());
+        } catch(UnknownHostException e) {
+            System.out.println("Sock:"+e.getMessage()); 
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        }
+        return ts;
+    }
 
     public void monstruoRecieve() throws InterruptedException {
         MonstCatcher mc = new MonstCatcher(ms);
@@ -68,15 +84,45 @@ public class PantallaJuego extends javax.swing.JFrame {
         System.out.println(mc.getMonstNum());
         System.out.println(mc.getMonstLife());
         pintaMonstruo(mc.getMonstNum(), true);
-        //Thread.sleep(mc.getMonstLife() * 1000);
+        Thread.sleep(mc.getMonstLife() * 1000);
         pintaMonstruo(mc.getMonstNum(), false);
     }
 
     public void monstruoHit(javax.swing.JLabel monst) {
         monst.setEnabled(false);
         monst.setVisible(false);
-        //Envia mensaje TCP para indicar golpe
-        //Si el golpe fue exitoso (recibe el numero de victimas) actualiza cuenta de victimas
+        KillSender ks = new KillSender(s, con.getUser());
+        ks.start();
+        victimas.setText("" + ks.getVictimas());
+        if (ks.getVictoria())
+            parpadeo();
+        if (ks.getFin()) {
+            victoria.setText("Fin de partida :(");
+            victoria.setVisible(true);
+        }
+        if (ks.getVictoria() || ks.getFin()) {
+            InicioJuego ini = new InicioJuego();
+            ini.setVisible(true);
+            this.setVisible(false);
+        }
+    }
+    
+    public void parpadeo() {
+        victoria.setText("¡Victoria!");
+        try {
+            victoria.setVisible(true);
+            Thread.sleep(500);
+            victoria.setVisible(false);
+            Thread.sleep(500);
+            victoria.setVisible(true);
+            Thread.sleep(500);
+            victoria.setVisible(false);
+            Thread.sleep(500);
+            victoria.setVisible(true);
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void pintaMonstruo(int num, boolean pinta) {
@@ -144,8 +190,8 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst8 = new javax.swing.JLabel();
         monst12 = new javax.swing.JLabel();
         monst4 = new javax.swing.JLabel();
+        victoria = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Monster Haven");
@@ -304,15 +350,15 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(monst4);
         monst4.setBounds(470, 160, 50, 50);
 
+        victoria.setFont(new java.awt.Font("Retro Gaming", 0, 48)); // NOI18N
+        victoria.setForeground(new java.awt.Color(255, 255, 153));
+        getContentPane().add(victoria);
+        victoria.setBounds(180, 80, 320, 60);
+        victoria.getAccessibleContext().setAccessibleName("");
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoBig.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 610, 340);
-
-        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 153));
-        jLabel3.setText("user");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 20, 80, 19);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -369,7 +415,6 @@ public class PantallaJuego extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel monst1;
     private javax.swing.JLabel monst10;
     private javax.swing.JLabel monst11;
@@ -384,5 +429,6 @@ public class PantallaJuego extends javax.swing.JFrame {
     private javax.swing.JLabel monst9;
     private javax.swing.JLabel username;
     private javax.swing.JLabel victimas;
+    private javax.swing.JLabel victoria;
     // End of variables declaration//GEN-END:variables
 }
