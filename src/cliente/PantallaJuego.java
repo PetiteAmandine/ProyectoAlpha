@@ -63,12 +63,12 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
 
     public void monstruoRecieve() throws InterruptedException {
-        MonstCatcher mc = new MonstCatcher(con, ms);
-        mc.run();
+        MonstCatcher mc = new MonstCatcher(ms);
+        mc.start();
         System.out.println(mc.getMonstNum());
         System.out.println(mc.getMonstLife());
         pintaMonstruo(mc.getMonstNum(), true);
-        Thread.sleep(mc.getMonstLife() * 1000);
+        //Thread.sleep(mc.getMonstLife() * 1000);
         pintaMonstruo(mc.getMonstNum(), false);
     }
 

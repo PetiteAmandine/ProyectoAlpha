@@ -16,11 +16,15 @@ public class Conexiones implements Serializable {
     private String user;
     private String multicastIP;
     private int multicastPort;
+    private String tcpIP;
+    private int tcpPort;
 
-    public Conexiones(String user, String multicastIP, int multicastPort) {
+    public Conexiones(String user, String multicastIP, int multicastPort, String tcpIP, int tcpPort) {
         this.user = user;
         this.multicastIP = multicastIP;
         this.multicastPort = multicastPort;
+        this.tcpIP = tcpIP;
+        this.tcpPort = tcpPort;
     }
 
     public String getUser() {
@@ -34,5 +38,13 @@ public class Conexiones implements Serializable {
     public int getMulticastPort() {
         return multicastPort;
     }
-    
+
+    public String getTcpIP() {
+        return tcpIP;
+    }
+
+    public int getTcpPort() {
+        return tcpPort;
+    }
+
 }

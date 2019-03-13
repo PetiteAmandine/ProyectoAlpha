@@ -45,7 +45,7 @@ public class InicioServidor implements Registro {
         Conexiones c = null;
         if (!jugadores.containsKey(nombre)) {
             jugadores.put(nombre, 0);
-            c = new Conexiones(nombre, "228.5.6.7", 6789);
+            c = new Conexiones(nombre, "228.5.6.7", 6789, "", 0);
         }
         return c;
     }
@@ -117,4 +117,18 @@ class MonstSender extends Thread {
         }
     }
 
+}
+
+class KillReceiver extends Thread {
+    
+    HashMap<String, Integer> jugadores;
+    
+    public KillReceiver(HashMap<String, Integer> jugadores) {
+        this.jugadores = jugadores;
+    }
+    
+    @Override
+    public void run() {
+        //Debe incrementar el número de víctimas del usuario dado en el hashmap jugadores
+    }
 }
