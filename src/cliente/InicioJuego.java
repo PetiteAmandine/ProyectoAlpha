@@ -9,7 +9,6 @@ import comunes.Conexiones;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author velasam
@@ -21,7 +20,7 @@ public class InicioJuego extends javax.swing.JFrame {
      */
     public InicioJuego() {
         initComponents();
-        
+
     }
 
     /**
@@ -110,18 +109,11 @@ public class InicioJuego extends javax.swing.JFrame {
             cr = new ClienteRegistro();
             con = cr.registra(username.getText());
             if (con != null) {
-                try {
-                    PantallaJuego juego = new PantallaJuego(con);
-                    juego.setVisible(true);
-                    this.setVisible(false);
-                    while(true) {
-                        juego.monstruoRecieve();
-                    }
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(InicioJuego.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            else {
+                Jugador jug = new Jugador(con);
+                this.setVisible(false);
+                while (true)
+                    jug.start();
+            } else {
                 error.setText("Por favor elige otro nombre");
             }
         }

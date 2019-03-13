@@ -20,17 +20,16 @@ import java.util.logging.Logger;
  * @author velasam
  */
 public class PantallaJuego extends javax.swing.JFrame {
-
-    private Conexiones con;
-    private MulticastSocket ms;
-    private Socket s;
+    
+    Jugador jug;
+    
 
     /**
      * Creates new form PantallaJuego
      *
      * @param con Clase que contiene datos para establecer conexiones
      */
-    public PantallaJuego(Conexiones con) throws InterruptedException {
+    public PantallaJuego(Conexiones con, Jugador jug) throws InterruptedException {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -45,67 +44,16 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst11.setVisible(false);
         monst12.setVisible(false);
         victoria.setVisible(false);
-        this.con = con;
         username.setText(con.getUser());
-        ms = creaConexionUDP();
-        s = creaConexionTCP();
+        this.jug = jug;
     }
 
-    public MulticastSocket creaConexionUDP() {
-        MulticastSocket ms = null;
-        try {
-            InetAddress group = InetAddress.getByName(con.getMulticastIP());
-            ms = new MulticastSocket(con.getMulticastPort());
-            ms.joinGroup(group);
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        }
-        return ms;
+    public void editaVictimas(String texto) {
+        victimas.setText(texto);
     }
     
-    public Socket creaConexionTCP() {
-        Socket ts = null;
-        try {
-            ts = new Socket(con.getTcpIP(), con.getTcpPort());
-        } catch(UnknownHostException e) {
-            System.out.println("Sock:"+e.getMessage()); 
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
-        }
-        return ts;
-    }
-
-    public void monstruoRecieve() throws InterruptedException {
-        MonstCatcher mc = new MonstCatcher(ms);
-        mc.start();
-        System.out.println(mc.getMonstNum());
-        System.out.println(mc.getMonstLife());
-        pintaMonstruo(mc.getMonstNum(), true);
-        //Corregir esta parte
-        Thread.sleep(mc.getMonstLife() * 1000);
-        pintaMonstruo(mc.getMonstNum(), false);
-    }
-
-    public void monstruoHit(javax.swing.JLabel monst) throws InterruptedException {
-        monst.setEnabled(false);
-        monst.setVisible(false);
-        KillSender ks = new KillSender(s, con.getUser());
-        ks.start();
-        victimas.setText("" + ks.getVictimas());
-        if (ks.getVictoria())
-            parpadeo();
-        if (ks.getFin()) {
-            victoria.setText("Fin de partida :(");
-            victoria.setVisible(true);
-            Thread.sleep(2000);
-        }
-        if (ks.getVictoria() || ks.getFin()) {
-            InicioJuego ini = new InicioJuego();
-            ini.setVisible(true);
-            this.setVisible(false);
-        }
+    public void pintaVictoria(boolean pinta) {
+        victoria.setVisible(pinta);
     }
     
     public void parpadeo() {
@@ -366,7 +314,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
         try {
-            monstruoHit(monst1);
+            jug.monstruoHit(monst1);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -374,7 +322,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
         try {
-            monstruoHit(monst2);
+            jug.monstruoHit(monst2);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -382,7 +330,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
         try {
-            monstruoHit(monst3);
+            jug.monstruoHit(monst3);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -390,7 +338,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
         try {
-            monstruoHit(monst4);
+            jug.monstruoHit(monst4);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -398,7 +346,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
         try {
-            monstruoHit(monst8);
+            jug.monstruoHit(monst8);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -406,7 +354,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
         try {
-            monstruoHit(monst7);
+            jug.monstruoHit(monst7);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -414,7 +362,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
         try {
-            monstruoHit(monst6);
+            jug.monstruoHit(monst6);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -422,7 +370,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
         try {
-            monstruoHit(monst5);
+            jug.monstruoHit(monst5);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -430,7 +378,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
         try {
-            monstruoHit(monst9);
+            jug.monstruoHit(monst9);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -438,7 +386,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
         try {
-            monstruoHit(monst10);
+            jug.monstruoHit(monst10);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -446,7 +394,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
         try {
-            monstruoHit(monst11);
+            jug.monstruoHit(monst11);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -454,7 +402,7 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
         try {
-            monstruoHit(monst12);
+            jug.monstruoHit(monst12);
         } catch (InterruptedException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -41,21 +41,25 @@ public class InicioServidor implements Registro {
     public InicioServidor() throws RemoteException {
         jugadores = new HashMap<>();
         puertos = new HashMap<>();
-        puertoAct = 0;
+        puertoAct = 1000;
         ganador = false;
         LocateRegistry.createRegistry(1099);
     }
-    
+
     public HashMap<String, Integer> getJugadores() {
         return jugadores;
     }
-    
+
     public HashMap<String, Integer> getPuertos() {
         return puertos;
     }
-    
+
     public boolean getGanador() {
         return ganador;
+    }
+
+    synchronized public void setGanador(boolean g) {
+        ganador = g;
     }
 
     @Override
@@ -64,7 +68,7 @@ public class InicioServidor implements Registro {
         if (!jugadores.containsKey(nombre)) {
             jugadores.put(nombre, 0);
             puertos.put(nombre, puertoAct);
-            c = new Conexiones(nombre, "228.5.6.7", 6789, "228.5.6.7", puertoAct);
+            c = new Conexiones(nombre, "228.5.6.7", 6789, "localhost", puertoAct);
             puertoAct++;
         }
         return c;
@@ -86,7 +90,7 @@ public class InicioServidor implements Registro {
             e.printStackTrace();
         }
     }
-    
+
     public static void main(String args[]) throws RemoteException, InterruptedException {
         InicioServidor me = new InicioServidor();
         me.creaEngine();
@@ -96,20 +100,29 @@ public class InicioServidor implements Registro {
             ms.joinGroup(group);
             while (!me.getGanador()) {
                 for (Integer p : me.getPuertos().values()) {
+                    if (me.getGanador()) {
+                        break;
+                    }
                     ServerSocket ss = new ServerSocket(p);
                     Socket s = ss.accept();
                     MonstSender mos = new MonstSender(ms, group);
                     mos.start();
                     KillCatcher kc = new KillCatcher(s, me.getJugadores(), me.getPuertos());
                     kc.start();
+                    me.setGanador(kc.getGanador());
+                }
+                if (!me.getGanador()) {
+                    for (Integer p : me.getPuertos().values()) {
+                        Socket auxs = new Socket("localhost", p);
+                        DataOutputStream out = new DataOutputStream(auxs.getOutputStream());
+                        out.writeBoolean(false);
+                    }
                 }
             }
-            if (me.getGanador()) {
-                for (Integer p : me.getPuertos().values()) {
-                    Socket auxs = new Socket("228.5.6.7", p);
-                    DataOutputStream out = new DataOutputStream(auxs.getOutputStream());
-                    out.writeBoolean(true);
-                }
+            for (Integer p : me.getPuertos().values()) {
+                Socket auxs = new Socket("localhost", p);
+                DataOutputStream out = new DataOutputStream(auxs.getOutputStream());
+                out.writeBoolean(true);
             }
         } catch (IOException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,14 +163,15 @@ class MonstSender extends Thread {
 }
 
 class KillCatcher extends Thread {
-    
+
     Socket socket;
     DataInputStream in;
     DataOutputStream out;
     HashMap<String, Integer> jugadores;
     HashMap<String, Integer> puertos;
-    final int nec=10;
-    
+    final int nec = 10;
+    boolean ganador = false;
+
     public KillCatcher(Socket aSocket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos) {
         try {
             socket = aSocket;
@@ -169,25 +183,28 @@ class KillCatcher extends Thread {
             Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    synchronized public boolean incKill(String jugador) throws IOException{
+
+    synchronized public boolean getGanador() {
+        return ganador;
+    }
+
+    synchronized public boolean incKill(String jugador) throws IOException {
         if (false) {
             //si no estuve a tiempo
             return false;
-        }
-        else {
-            return jugadores.get(jugador) + 1 == nec;
+        } else {
+            jugadores.put(jugador, jugadores.get(jugador) + 1);
+            return jugadores.get(jugador) == nec;
         }
     }
-    
+
     @Override
     public void run() {
-        
-        Socket s = null;
         try {
             String jugador;
             jugador = in.readUTF();
-            out.writeBoolean(incKill(jugador));
+            ganador = incKill(jugador);
+            out.writeBoolean(ganador);
             out.writeInt(jugadores.get(jugador));
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());
@@ -195,14 +212,6 @@ class KillCatcher extends Thread {
             System.out.println("EOF:" + e.getMessage());
         } catch (IOException e) {
             System.out.println("IO:" + e.getMessage());
-        } finally {
-            if (s != null) {
-                try {
-                    s.close();
-                } catch (IOException e) {
-                    System.out.println("close:" + e.getMessage());
-                }
-            }
         }
     }
 }
