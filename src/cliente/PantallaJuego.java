@@ -6,7 +6,6 @@
 package cliente;
 
 import comunes.*;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -84,11 +83,12 @@ public class PantallaJuego extends javax.swing.JFrame {
         System.out.println(mc.getMonstNum());
         System.out.println(mc.getMonstLife());
         pintaMonstruo(mc.getMonstNum(), true);
+        //Corregir esta parte
         Thread.sleep(mc.getMonstLife() * 1000);
         pintaMonstruo(mc.getMonstNum(), false);
     }
 
-    public void monstruoHit(javax.swing.JLabel monst) {
+    public void monstruoHit(javax.swing.JLabel monst) throws InterruptedException {
         monst.setEnabled(false);
         monst.setVisible(false);
         KillSender ks = new KillSender(s, con.getUser());
@@ -99,6 +99,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         if (ks.getFin()) {
             victoria.setText("Fin de partida :(");
             victoria.setVisible(true);
+            Thread.sleep(2000);
         }
         if (ks.getVictoria() || ks.getFin()) {
             InicioJuego ini = new InicioJuego();
@@ -364,51 +365,99 @@ public class PantallaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
-        monstruoHit(monst1);
+        try {
+            monstruoHit(monst1);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst1MouseClicked
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
-        monstruoHit(monst2);
+        try {
+            monstruoHit(monst2);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst2MouseClicked
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
-        monstruoHit(monst3);
+        try {
+            monstruoHit(monst3);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst3MouseClicked
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
-        monstruoHit(monst4);
+        try {
+            monstruoHit(monst4);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst4MouseClicked
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
-        monstruoHit(monst8);
+        try {
+            monstruoHit(monst8);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst8MouseClicked
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
-        monstruoHit(monst7);
+        try {
+            monstruoHit(monst7);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst7MouseClicked
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
-        monstruoHit(monst6);
+        try {
+            monstruoHit(monst6);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst6MouseClicked
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
-        monstruoHit(monst5);
+        try {
+            monstruoHit(monst5);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst5MouseClicked
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
-        monstruoHit(monst9);
+        try {
+            monstruoHit(monst9);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst9MouseClicked
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
-        monstruoHit(monst10);
+        try {
+            monstruoHit(monst10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst10MouseClicked
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
-        monstruoHit(monst11);
+        try {
+            monstruoHit(monst11);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst11MouseClicked
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
-        monstruoHit(monst12);
+        try {
+            monstruoHit(monst12);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_monst12MouseClicked
 
 

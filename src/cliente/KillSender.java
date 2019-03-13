@@ -49,8 +49,8 @@ public class KillSender extends Thread {
             try {
                 out.writeUTF(jugador);
                 victoria = in.readBoolean();
-                fin = in.readBoolean();
                 victimas = in.readInt();
+                fin = in.readBoolean();
             } catch (EOFException e) {
                 System.out.println("EOF:" + e.getMessage());
             } catch (IOException e) {

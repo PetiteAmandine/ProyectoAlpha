@@ -23,7 +23,7 @@ public class ClienteRegistro {
     public Conexiones registra(String jugador) {
         Conexiones con = null;
         try {
-            System.setProperty("java.security.policy", "C:/Users/Eduardo/ProyectoAlpha/src/cliente/client.policy");
+            System.setProperty("java.security.policy", "C:/Users/Amandine/Documents/ITAM/8vo Semestre/Sistemas Distribuidos/ProyectoAlpha/src/cliente/client.policy");
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }

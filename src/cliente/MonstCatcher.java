@@ -52,6 +52,8 @@ public class MonstCatcher extends Thread {
             tiempo = new String(res);
             tiempo = tiempo.trim();
             monstLife = Integer.parseInt(tiempo);
+            System.out.println(pos);
+            System.out.println(tiempo);
         } catch (IOException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
