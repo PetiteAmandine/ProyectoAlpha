@@ -103,6 +103,8 @@ public class InicioJuego extends javax.swing.JFrame {
         Conexiones con;
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
+        } else if (username.getText().equals("-")) {
+            error.setText("Por favor elige otro nombre");
         } else {
             cr = new ClienteRegistro();
             con = cr.registra(username.getText());

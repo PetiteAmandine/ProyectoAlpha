@@ -17,11 +17,14 @@ import java.util.logging.Logger;
  */
 public class MonstCatcher extends Thread {
 
+    private PantallaJuego pj;
     private MulticastSocket clientSocket;
-    private int monstNum;
+    private int monstNum, monstAnt;
 
-    public MonstCatcher(MulticastSocket aClientSocket) {
+    public MonstCatcher(MulticastSocket aClientSocket, PantallaJuego pj) {
         clientSocket = aClientSocket;
+        this.pj = pj;
+        monstAnt = 0;
     }
 
     public int getMonstNum() {
@@ -35,18 +38,26 @@ public class MonstCatcher extends Thread {
         String pos;
         DatagramPacket messageIn;
         try {
-            messageIn = new DatagramPacket(mens, mens.length);
-            clientSocket.receive(messageIn);
-            res = messageIn.getData();
-            pos = new String(res);
-            pos = pos.trim();
-            monstNum = Integer.parseInt(pos);
+            while (true) {
+                messageIn = new DatagramPacket(mens, mens.length);
+                clientSocket.receive(messageIn);
+                pj.pintaMonstruo(monstAnt, false);
+                res = messageIn.getData();
+                pos = new String(res).trim();
+                monstNum = Integer.parseInt(pos) > 12 ? 1 : Integer.parseInt(pos);
+                System.out.println(monstNum);
+                pj.pintaMonstruo(monstNum, true);
+                monstAnt = monstNum;
+            }
         } catch (IOException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        } /*finally {
-                if(clientSocket !=null) 
-                    clientSocket.close();
-            }*/
+        } catch (NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            if (clientSocket != null) {
+                clientSocket.close();
+            }
+        }
     }
-
 }
+

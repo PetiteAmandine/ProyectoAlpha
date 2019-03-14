@@ -43,6 +43,7 @@ public class InicioServidor implements Registro {
         puertoAct = 1000;
         ganador = false;
         LocateRegistry.createRegistry(1099);
+        creaEngine();
     }
 
     public HashMap<String, Integer> getJugadores() {
@@ -91,28 +92,19 @@ public class InicioServidor implements Registro {
     }
 
     public static void main(String args[]) throws RemoteException, InterruptedException {
-        InicioServidor me = new InicioServidor();
-        me.creaEngine();
         try {
-            System.out.println("Entré al try.");
-            InetAddress group = InetAddress.getByName("228.5.6.7");
-            MulticastSocket ms = new MulticastSocket(6789);
-            ms.joinGroup(group);
+            InicioServidor me = new InicioServidor();
             ServerSocket ss = new ServerSocket(1000);
-            while (!me.getGanador()) {
-                MonstSender mos = new MonstSender(ms, group);
-                mos.start();
-                System.out.println("Pasé a mos.");
-                    if (me.getGanador()) {
-                        System.out.println("Bye");
-                        break;
-                    }
-                    Socket s = ss.accept();
-                    KillCatcher kc = new KillCatcher(s, me.getJugadores(), me.getPuertos(), mos.getLife());
-                    kc.start();
-                    me.setGanador(kc.getGanador());
+            MonstSender mos = new MonstSender();
+            mos.start();
+            while (true) {
+                Socket socket = ss.accept();
+                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife());
+                kc.start();
+                if (kc.getGanador()) {
+                    me.getJugadores().clear();
+                }
             }
-            me.getJugadores().clear();
         } catch (IOException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,36 +114,51 @@ public class InicioServidor implements Registro {
 class MonstSender extends Thread {
 
     MulticastSocket clientSocket;
-    InetAddress group;
     long life;
+    InetAddress group;
 
-    public MonstSender(MulticastSocket aClientSocket, InetAddress aGroup) {
-        clientSocket = aClientSocket;
-        group = aGroup;
+    public MonstSender() {
+        try {
+            clientSocket = new MulticastSocket(6789);
+            this.group = InetAddress.getByName("228.5.6.7");
+            clientSocket.joinGroup(group);
+            System.out.println("Creado multicast.");
+        } catch (IOException ex) {
+            Logger.getLogger(MonstSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     public long getLife() {
         return life;
     }
 
     @Override
     public void run() {
-        byte[] m;
+        byte[] m = new byte[100];
         DatagramPacket messageOut;
+        Monstruo monst;
+        String pos;
         try {
-            System.out.println("Enviando monstruos.");
-            Monstruo monst = new Monstruo();
-            String pos = monst.getPosicion() + "";
-            m = pos.getBytes();
-            messageOut = new DatagramPacket(m, m.length, group, 6789);
-            clientSocket.send(messageOut);
-            life = monst.getTiempoVida()*1000 + System.currentTimeMillis();
+            while (true) {
+                System.out.println("Enviando monstruos.");
+                monst = new Monstruo();
+                pos = monst.getPosicion() + "";
+                m = pos.getBytes();
+                messageOut = new DatagramPacket(m, m.length, group, 6789);
+                clientSocket.send(messageOut);
+                life = monst.getTiempoVida() * 1000 + System.currentTimeMillis();
+                System.out.println("Posición: " + monst.getPosicion() + " tiempo de vida: " + monst.getTiempoVida());
+                Thread.sleep(monst.getTiempoVida() * 1000);
+            }
         } catch (IOException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
-        } /*finally {
-            if (clientSocket != null) 
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MonstSender.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (clientSocket != null) {
                 clientSocket.close();
-        }*/
+            }
+        }
     }
 }
 
@@ -163,12 +170,12 @@ class KillCatcher extends Thread {
     DataOutputStream out;
     HashMap<String, Integer> jugadores;
     HashMap<String, Integer> puertos;
-    final int nec = 10;
+    final int nec = 3;
     boolean ganador = false;
 
-    public KillCatcher(Socket aSocket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life) {
+    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life) {
         try {
-            socket = aSocket;
+            this.socket = socket;
             this.jugadores = jugadores;
             this.puertos = puertos;
             in = new DataInputStream(socket.getInputStream());
@@ -179,7 +186,7 @@ class KillCatcher extends Thread {
         }
     }
 
-    synchronized public boolean getGanador() {
+    public boolean getGanador() {
         return ganador;
     }
 
@@ -194,31 +201,33 @@ class KillCatcher extends Thread {
 
     @Override
     public void run() {
+        String jugador;
         System.out.println("Esperando golpes.");
-        try {
-            String jugador;
-            jugador = in.readUTF();
-            ganador = incKill(jugador);
-            if (ganador)
-                out.writeUTF("Ganador" + jugador);
-            else
-                out.writeUTF("-");
-            out.writeInt(jugadores.get(jugador));
-        } catch (UnknownHostException e) {
-            System.out.println("Sock:" + e.getMessage());
-        } catch (EOFException e) {
-            System.out.println("EOF:" + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO:" + e.getMessage());
-        }
-        /*finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
+        while (true) {
+            try {
+                jugador = in.readUTF();
+                ganador = incKill(jugador);
+                if (ganador) {
+                    out.writeUTF(jugador);
+                } else {
+                    out.writeUTF("-");
+                }
+                out.writeInt(jugadores.get(jugador));
+            } catch (UnknownHostException e) {
+                System.out.println("Sock:" + e.getMessage());
+            } catch (EOFException e) {
+                System.out.println("EOF:" + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("IO:" + e.getMessage());
+            } finally {
+                if (socket != null) {
+                    try {
+                        socket.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-        }*/
+        }
     }
 }

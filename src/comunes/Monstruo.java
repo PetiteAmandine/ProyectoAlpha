@@ -19,7 +19,7 @@ public class Monstruo {
     public Monstruo() {
         Random r = new Random(System.currentTimeMillis());
         posicion = r.nextInt(12) + 1;
-        tiempoVida = r.nextInt(3) + 1;
+        tiempoVida = r.nextInt(3) + 3;
     }
 
     public int getPosicion() {

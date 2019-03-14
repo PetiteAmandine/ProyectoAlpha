@@ -5,9 +5,7 @@
  */
 package cliente;
 
-import comunes.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import comunes.Conexiones;
 
 /**
  *
@@ -15,14 +13,13 @@ import java.util.logging.Logger;
  */
 public class PantallaJuego extends javax.swing.JFrame {
     
-    int victima;
-    
+    Conexiones con;
 
     /**
      * Creates new form PantallaJuego
      *
      */
-    public PantallaJuego(String username) throws InterruptedException {
+    public PantallaJuego(Conexiones con) throws InterruptedException {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -37,16 +34,9 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst11.setVisible(false);
         monst12.setVisible(false);
         victoria.setVisible(false);
-        this.username.setText(username);
-        victima = 0;
-    }
-
-    public int getVictima() {
-        return victima;
-    }
-
-    public void resetVictima() {
-        victima = 0;
+        replay.setVisible(false);
+        this.con = con;
+        this.username.setText(con.getUser());
     }
 
     public void editaVictimas(String texto) {
@@ -58,22 +48,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         victoria.setText("El ganador de esta ronda es: " + nombre);
     }
     
-    public void parpadeo() {
-        try {
-            victoria.setVisible(true);
-            Thread.sleep(500);
-            victoria.setVisible(false);
-            Thread.sleep(500);
-            victoria.setVisible(true);
-            Thread.sleep(500);
-            victoria.setVisible(false);
-            Thread.sleep(500);
-            victoria.setVisible(true);
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     public void pintaMonstruo(int num, boolean pinta) {
         switch (num) {
@@ -115,6 +89,27 @@ public class PantallaJuego extends javax.swing.JFrame {
                     break;
         }
     }
+    
+    public void enviaGolpe() {
+        try {
+            KillSender ks = new KillSender(con);
+            ks.start();
+            ks.join();
+            System.out.println("Golpe enviado.");
+            editaVictimas("" + ks.getVictimas());
+            String ganador = ks.getGanador();
+            if (ganador != null && !ganador.equals("-")) {
+                pintaVictoria(ganador);
+                replay.setVisible(true);
+                replay.setEnabled(true);
+                
+            }
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,6 +135,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst8 = new javax.swing.JLabel();
         monst12 = new javax.swing.JLabel();
         monst4 = new javax.swing.JLabel();
+        replay = new javax.swing.JButton();
         victoria = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -168,7 +164,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         getContentPane().add(username);
         username.setBounds(20, 20, 320, 18);
 
-        monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst1.setEnabled(false);
         monst1.setName("monst1"); // NOI18N
         monst1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -177,9 +173,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst1);
-        monst1.setBounds(110, 160, 50, 50);
+        monst1.setBounds(70, 130, 110, 80);
 
-        monst5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst5.setEnabled(false);
         monst5.setName("monst5"); // NOI18N
         monst5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,9 +184,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst5);
-        monst5.setBounds(110, 210, 50, 50);
+        monst5.setBounds(70, 180, 110, 80);
 
-        monst2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst2.setEnabled(false);
         monst2.setName("monst2"); // NOI18N
         monst2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -199,9 +195,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst2);
-        monst2.setBounds(230, 160, 50, 50);
+        monst2.setBounds(190, 130, 110, 80);
 
-        monst9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst9.setEnabled(false);
         monst9.setName("monst9"); // NOI18N
         monst9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,9 +206,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst9);
-        monst9.setBounds(110, 260, 50, 50);
+        monst9.setBounds(70, 230, 110, 80);
 
-        monst10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst10.setEnabled(false);
         monst10.setName("monst10"); // NOI18N
         monst10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -221,9 +217,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst10);
-        monst10.setBounds(230, 260, 50, 50);
+        monst10.setBounds(190, 230, 110, 80);
 
-        monst6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst6.setEnabled(false);
         monst6.setName("monst6"); // NOI18N
         monst6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -232,9 +228,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst6);
-        monst6.setBounds(230, 210, 50, 50);
+        monst6.setBounds(190, 180, 110, 80);
 
-        monst3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst3.setEnabled(false);
         monst3.setName("monst3"); // NOI18N
         monst3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -243,9 +239,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst3);
-        monst3.setBounds(360, 160, 50, 50);
+        monst3.setBounds(320, 130, 110, 80);
 
-        monst7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst7.setEnabled(false);
         monst7.setName("monst7"); // NOI18N
         monst7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,9 +250,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst7);
-        monst7.setBounds(360, 210, 50, 50);
+        monst7.setBounds(320, 180, 110, 80);
 
-        monst11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst11.setEnabled(false);
         monst11.setName("monst11"); // NOI18N
         monst11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -265,9 +261,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst11);
-        monst11.setBounds(360, 260, 50, 50);
+        monst11.setBounds(320, 230, 110, 80);
 
-        monst8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst8.setEnabled(false);
         monst8.setName("monst8"); // NOI18N
         monst8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -276,9 +272,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst8);
-        monst8.setBounds(470, 210, 50, 50);
+        monst8.setBounds(430, 180, 110, 80);
 
-        monst12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst12.setEnabled(false);
         monst12.setName("monst12"); // NOI18N
         monst12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -287,9 +283,9 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst12);
-        monst12.setBounds(470, 260, 50, 50);
+        monst12.setBounds(430, 230, 110, 80);
 
-        monst4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/monstruo.png"))); // NOI18N
+        monst4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/ghostsmol.gif"))); // NOI18N
         monst4.setEnabled(false);
         monst4.setName("monst4"); // NOI18N
         monst4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -298,13 +294,29 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         });
         getContentPane().add(monst4);
-        monst4.setBounds(470, 160, 50, 50);
+        monst4.setBounds(430, 130, 110, 80);
 
-        victoria.setFont(new java.awt.Font("Retro Gaming", 0, 48)); // NOI18N
+        replay.setBackground(new java.awt.Color(255, 255, 153));
+        replay.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
+        replay.setText("Jugar de nuevo");
+        replay.setAlignmentY(0.0F);
+        replay.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        replay.setBorderPainted(false);
+        replay.setEnabled(false);
+        replay.setName("botonInicio"); // NOI18N
+        replay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                replayActionPerformed(evt);
+            }
+        });
+        getContentPane().add(replay);
+        replay.setBounds(210, 200, 170, 31);
+
+        victoria.setFont(new java.awt.Font("Retro Gaming", 0, 24)); // NOI18N
         victoria.setForeground(new java.awt.Color(255, 255, 153));
+        victoria.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(victoria);
-        victoria.setBounds(180, 80, 320, 60);
-        victoria.getAccessibleContext().setAccessibleName("");
+        victoria.setBounds(0, 80, 610, 60);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoBig.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -314,52 +326,70 @@ public class PantallaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
-        victima = 1;
+        pintaMonstruo(1, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst1MouseClicked
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
-        victima = 2;
+        pintaMonstruo(2, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst2MouseClicked
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
-        victima = 3;
+        pintaMonstruo(3, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst3MouseClicked
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
-        victima = 4;
+        pintaMonstruo(4, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst4MouseClicked
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
-        victima = 8;
+        pintaMonstruo(8, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst8MouseClicked
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
-        victima = 7;
+        pintaMonstruo(7, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst7MouseClicked
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
-        victima = 6;
+        pintaMonstruo(6, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst6MouseClicked
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
-        victima = 5;
+        pintaMonstruo(5, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst5MouseClicked
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
-        victima = 9;
+        pintaMonstruo(9, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst9MouseClicked
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
-        victima = 10;
+        pintaMonstruo(10, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst10MouseClicked
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
-        victima = 11;
+        pintaMonstruo(11, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst11MouseClicked
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
-       victima = 12;
+       pintaMonstruo(12, false);
+        enviaGolpe();
     }//GEN-LAST:event_monst12MouseClicked
+
+    private void replayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replayActionPerformed
+        InicioJuego ini = new InicioJuego();
+        ini.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_replayActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -377,6 +407,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     private javax.swing.JLabel monst7;
     private javax.swing.JLabel monst8;
     private javax.swing.JLabel monst9;
+    private javax.swing.JButton replay;
     private javax.swing.JLabel username;
     private javax.swing.JLabel victimas;
     private javax.swing.JLabel victoria;
