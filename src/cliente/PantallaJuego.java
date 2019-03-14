@@ -6,12 +6,6 @@
 package cliente;
 
 import comunes.*;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,15 +15,14 @@ import java.util.logging.Logger;
  */
 public class PantallaJuego extends javax.swing.JFrame {
     
-    Jugador jug;
+    int victima;
     
 
     /**
      * Creates new form PantallaJuego
      *
-     * @param con Clase que contiene datos para establecer conexiones
      */
-    public PantallaJuego(Conexiones con, Jugador jug) throws InterruptedException {
+    public PantallaJuego(String username) throws InterruptedException {
         initComponents();
         monst1.setVisible(false);
         monst2.setVisible(false);
@@ -44,20 +37,28 @@ public class PantallaJuego extends javax.swing.JFrame {
         monst11.setVisible(false);
         monst12.setVisible(false);
         victoria.setVisible(false);
-        username.setText(con.getUser());
-        this.jug = jug;
+        this.username.setText(username);
+        victima = 0;
+    }
+
+    public int getVictima() {
+        return victima;
+    }
+
+    public void resetVictima() {
+        victima = 0;
     }
 
     public void editaVictimas(String texto) {
         victimas.setText(texto);
     }
     
-    public void pintaVictoria(boolean pinta) {
-        victoria.setVisible(pinta);
+    public void pintaVictoria(String nombre) {
+        victoria.setVisible(true);
+        victoria.setText("El ganador de esta ronda es: " + nombre);
     }
     
     public void parpadeo() {
-        victoria.setText("¡Victoria!");
         try {
             victoria.setVisible(true);
             Thread.sleep(500);
@@ -313,99 +314,51 @@ public class PantallaJuego extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void monst1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst1MouseClicked
-        try {
-            jug.monstruoHit(monst1);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 1;
     }//GEN-LAST:event_monst1MouseClicked
 
     private void monst2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst2MouseClicked
-        try {
-            jug.monstruoHit(monst2);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 2;
     }//GEN-LAST:event_monst2MouseClicked
 
     private void monst3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst3MouseClicked
-        try {
-            jug.monstruoHit(monst3);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 3;
     }//GEN-LAST:event_monst3MouseClicked
 
     private void monst4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst4MouseClicked
-        try {
-            jug.monstruoHit(monst4);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 4;
     }//GEN-LAST:event_monst4MouseClicked
 
     private void monst8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst8MouseClicked
-        try {
-            jug.monstruoHit(monst8);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 8;
     }//GEN-LAST:event_monst8MouseClicked
 
     private void monst7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst7MouseClicked
-        try {
-            jug.monstruoHit(monst7);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 7;
     }//GEN-LAST:event_monst7MouseClicked
 
     private void monst6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst6MouseClicked
-        try {
-            jug.monstruoHit(monst6);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 6;
     }//GEN-LAST:event_monst6MouseClicked
 
     private void monst5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst5MouseClicked
-        try {
-            jug.monstruoHit(monst5);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 5;
     }//GEN-LAST:event_monst5MouseClicked
 
     private void monst9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst9MouseClicked
-        try {
-            jug.monstruoHit(monst9);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 9;
     }//GEN-LAST:event_monst9MouseClicked
 
     private void monst10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst10MouseClicked
-        try {
-            jug.monstruoHit(monst10);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 10;
     }//GEN-LAST:event_monst10MouseClicked
 
     private void monst11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst11MouseClicked
-        try {
-            jug.monstruoHit(monst11);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        victima = 11;
     }//GEN-LAST:event_monst11MouseClicked
 
     private void monst12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_monst12MouseClicked
-        try {
-            jug.monstruoHit(monst12);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       victima = 12;
     }//GEN-LAST:event_monst12MouseClicked
 
 

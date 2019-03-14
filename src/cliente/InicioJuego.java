@@ -6,8 +6,6 @@
 package cliente;
 
 import comunes.Conexiones;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -111,8 +109,7 @@ public class InicioJuego extends javax.swing.JFrame {
             if (con != null) {
                 Jugador jug = new Jugador(con);
                 this.setVisible(false);
-                while (true)
-                    jug.start();
+                jug.start();
             } else {
                 error.setText("Por favor elige otro nombre");
             }

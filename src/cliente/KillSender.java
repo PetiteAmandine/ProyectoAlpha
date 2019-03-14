@@ -19,8 +19,8 @@ public class KillSender extends Thread {
         private DataInputStream in;
 	private DataOutputStream out;
 	private Socket clientSocket;
-        private String jugador;
-        private boolean victoria, fin;
+        private String jugador, ganador;
+        private boolean fin;
         private int victimas;
         
 	public KillSender (Socket aClientSocket, String jugador) {
@@ -29,12 +29,9 @@ public class KillSender extends Thread {
                 this.jugador = jugador;
 		in = new DataInputStream(clientSocket.getInputStream());
 		out =new DataOutputStream(clientSocket.getOutputStream());
+                fin = false;
 	     } catch(IOException e)  {System.out.println("Connection:"+e.getMessage());}
 	}
-        
-        public boolean getVictoria() {
-            return victoria;
-        }
         
         public boolean getFin() {
             return fin;
@@ -44,23 +41,33 @@ public class KillSender extends Thread {
             return victimas;
         }
         
+        public String getGanador() {
+            return ganador;
+        }
+        
         @Override
 	public void run(){
             try {
                 out.writeUTF(jugador);
-                victoria = in.readBoolean();
+                ganador = in.readUTF();
                 victimas = in.readInt();
-                fin = in.readBoolean();
             } catch (EOFException e) {
                 System.out.println("EOF:" + e.getMessage());
             } catch (IOException e) {
                 System.out.println("IO:" + e.getMessage());
             }
-            try {
+            /*try {
             clientSocket.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
-            }
+            } /*finally {
+                if (clientSocket != null)
+                    try {
+                        clientSocket.close();
+                    } catch (IOException e) {
+                        System.out.println("close: " + e.getMessage());
+                    }
+            }*/
         }
     
 }

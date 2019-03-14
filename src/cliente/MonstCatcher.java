@@ -19,7 +19,6 @@ public class MonstCatcher extends Thread {
 
     private MulticastSocket clientSocket;
     private int monstNum;
-    private int monstLife;
 
     public MonstCatcher(MulticastSocket aClientSocket) {
         clientSocket = aClientSocket;
@@ -29,16 +28,11 @@ public class MonstCatcher extends Thread {
         return monstNum;
     }
 
-    public int getMonstLife() {
-        return monstLife;
-    }
-
     @Override
     public void run() {
         byte[] mens = new byte[100];
         byte[] res;
         String pos;
-        String tiempo;
         DatagramPacket messageIn;
         try {
             messageIn = new DatagramPacket(mens, mens.length);
@@ -47,16 +41,12 @@ public class MonstCatcher extends Thread {
             pos = new String(res);
             pos = pos.trim();
             monstNum = Integer.parseInt(pos);
-            clientSocket.receive(messageIn);
-            res = messageIn.getData();
-            tiempo = new String(res);
-            tiempo = tiempo.trim();
-            monstLife = Integer.parseInt(tiempo);
-            System.out.println(pos);
-            System.out.println(tiempo);
         } catch (IOException ex) {
             Logger.getLogger(PantallaJuego.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } /*finally {
+                if(clientSocket !=null) 
+                    clientSocket.close();
+            }*/
     }
 
 }
