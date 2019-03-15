@@ -44,11 +44,21 @@ public class MonstCatcher extends Thread {
                 pj.pintaMonstruo(monstAnt, false);
                 res = messageIn.getData();
                 pos = new String(res).trim();
-                int aux = Integer.parseInt(pos);
-                pos = aux > 12 ? new String(res).trim().charAt(0) + "" : pos;
-                monstNum = Integer.parseInt(pos);
-                System.out.println(monstNum);
-                pj.pintaMonstruo(monstNum, true);
+                if (pos.contains("---")) {
+                    clientSocket.receive(messageIn);
+                    res = messageIn.getData();
+                    String ganador =  new String(res).trim();
+                    System.out.println(ganador);
+                    pj.pintaFin();
+                    pj.pintaVictoria(ganador);
+                } else {
+                    int aux = Integer.parseInt(pos);
+                    pos = aux > 12 ? new String(res).trim().charAt(0) + "" : pos;
+                    monstNum = Integer.parseInt(pos);
+                    System.out.println(monstNum);
+                    pj.pintaMonstruo(monstNum, true);
+                }
+                
                 monstAnt = monstNum;
             }
         } catch (IOException ex) {

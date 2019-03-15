@@ -47,7 +47,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         victoria.setText(victoria.getText() + nombre + "!");
     }
     
-    
     public void pintaMonstruo(int num, boolean pinta) {
         switch (num) {
             case 1: monst1.setVisible(pinta);
@@ -89,6 +88,11 @@ public class PantallaJuego extends javax.swing.JFrame {
         }
     }
     
+    public void pintaFin() {
+        monsts.setVisible(false);
+        finJuego.setVisible(true);
+    }
+    
     public void enviaGolpe() {
         try {
             KillSender ks = new KillSender(con);
@@ -96,12 +100,6 @@ public class PantallaJuego extends javax.swing.JFrame {
             ks.join();
             System.out.println("Golpe enviado.");
             editaVictimas("" + ks.getVictimas());
-            String ganador = ks.getGanador();
-            if (ganador != null && !ganador.equals("-")) {
-                monsts.setVisible(false);
-                finJuego.setVisible(true);
-                pintaVictoria(ganador);
-            }
         } catch (InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
@@ -411,6 +409,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     private void replayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replayActionPerformed
         InicioJuego ini = new InicioJuego();
         ini.setVisible(true);
+        ini.recuerdaNombre(con.getUser());
         setVisible(false);
     }//GEN-LAST:event_replayActionPerformed
 

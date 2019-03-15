@@ -23,7 +23,6 @@ public class Jugador extends Thread {
 
     private Conexiones con;
     private MulticastSocket ms;
-    private Socket s;
     private PantallaJuego pj;
 
     public Jugador(Conexiones con) {

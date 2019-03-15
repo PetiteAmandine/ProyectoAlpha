@@ -101,7 +101,7 @@ public class InicioServidor implements Registro {
             mos.start();
             while (true) {
                 Socket socket = ss.accept();
-                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife(), me);
+                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife(), me, mos);
                 kc.start();
             }
         } catch (IOException ex) {
@@ -129,6 +129,25 @@ class MonstSender extends Thread {
 
     public long getLife() {
         return life;
+    }
+    
+    public void enviaGanador(String ganador) {
+        byte[] m = new byte[100];
+        DatagramPacket messageOut;
+        try {
+            System.out.println("Enviando ganador.");
+            m = "---".getBytes();
+            messageOut = new DatagramPacket(m, m.length, group, 6789);
+            clientSocket.send(messageOut);
+            m = ganador.getBytes();
+            messageOut = new DatagramPacket(m, m.length, group, 6789);
+            clientSocket.send(messageOut);
+            Thread.sleep(3000);
+        } catch (IOException ex) {
+            Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MonstSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -172,8 +191,9 @@ class KillCatcher extends Thread {
     final int nec = 3;
     boolean ganador = false;
     InicioServidor ini;
+    MonstSender ms;
 
-    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life, InicioServidor ini) {
+    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life, InicioServidor ini, MonstSender ms) {
         try {
             this.socket = socket;
             this.jugadores = jugadores;
@@ -182,6 +202,7 @@ class KillCatcher extends Thread {
             out = new DataOutputStream(socket.getOutputStream());
             this.life = life;
             this.ini = ini;
+            this.ms = ms;
         } catch (IOException ex) {
             Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,13 +224,14 @@ class KillCatcher extends Thread {
         try {
             jugador = in.readUTF();
             ganador = incKill(jugador);
+            out.writeInt(jugadores.get(jugador));
             if (ganador) {
-                out.writeUTF(jugador);
+                //out.writeUTF(jugador);
+                ms.enviaGanador(jugador);
                 ini.reseteaJugadores();
             } else {
                 out.writeUTF("-");
             }
-            out.writeInt(jugadores.get(jugador));
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());
         } catch (EOFException e) {

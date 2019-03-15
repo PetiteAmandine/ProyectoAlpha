@@ -23,6 +23,10 @@ public class InicioJuego extends javax.swing.JFrame {
     public InicioJuego() {
         initComponents();
     }
+    
+    public void recuerdaNombre(String nombre) {
+        username.setText(nombre);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +112,7 @@ public class InicioJuego extends javax.swing.JFrame {
         Conexiones con;
         if (username.getText().equals("")) {
             error.setText("¡Debes elegir un nombre!");
-        } else if (username.getText().equals("-")) {
+        } else if (username.getText().equals("-") || username.getText().equals("---")) {
             error.setText("Por favor elige otro nombre");
         } else {
             cr = new ClienteRegistro();

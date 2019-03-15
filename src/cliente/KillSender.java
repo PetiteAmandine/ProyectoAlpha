@@ -24,7 +24,7 @@ public class KillSender extends Thread {
     private DataInputStream in;
     private DataOutputStream out;
     private Socket clientSocket;
-    private String jugador, ganador;
+    private String jugador;
     private boolean fin;
     private int victimas;
 
@@ -52,15 +52,10 @@ public class KillSender extends Thread {
         return victimas;
     }
 
-    public String getGanador() {
-        return ganador;
-    }
-
     @Override
     public void run() {
         try {
             out.writeUTF(jugador);
-            ganador = in.readUTF();
             victimas = in.readInt();
         } catch (EOFException e) {
             System.out.println("EOF:" + e.getMessage());
