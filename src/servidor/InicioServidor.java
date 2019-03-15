@@ -62,7 +62,7 @@ public class InicioServidor implements Registro {
         if (!jugadores.containsKey(nombre)) {
             jugadores.put(nombre, 0);
         }
-        c = new Conexiones(nombre, "228.5.6.7", 6789, "127.0.0.1", 1000);
+        c = new Conexiones(nombre, "228.5.6.7", 6789, "localhost", 1000);
         return c;
     }
 
@@ -75,7 +75,11 @@ public class InicioServidor implements Registro {
             Registry registry = LocateRegistry.getRegistry();
             InicioServidor engine = this;
             Registro stub = (Registro) UnicastRemoteObject.exportObject(engine, 1099);
+            //System.out.println(java.net.InetAddress.getLocalHost());
+            //System.setProperty("java.rmi.server.hostname", "");
+            //System.out.println(java.net.InetAddress.getLocalHost());
             registry.rebind("Registro", stub);
+            
             System.out.println("Registry engine bound");
         } catch (Exception e) {
             System.err.println("Registry engine exception:");
