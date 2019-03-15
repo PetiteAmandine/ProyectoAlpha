@@ -21,8 +21,6 @@ import java.net.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +46,10 @@ public class InicioServidor implements Registro {
 
     public HashMap<String, Integer> getJugadores() {
         return jugadores;
+    }
+
+    public void reseteaJugadores() {
+        jugadores = new HashMap<>();
     }
 
     public HashMap<String, Integer> getPuertos() {
@@ -99,11 +101,8 @@ public class InicioServidor implements Registro {
             mos.start();
             while (true) {
                 Socket socket = ss.accept();
-                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife());
+                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife(), me);
                 kc.start();
-                if (kc.getGanador()) {
-                    me.getJugadores().clear();
-                }
             }
         } catch (IOException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,8 +171,9 @@ class KillCatcher extends Thread {
     HashMap<String, Integer> puertos;
     final int nec = 3;
     boolean ganador = false;
+    InicioServidor ini;
 
-    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life) {
+    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life, InicioServidor ini) {
         try {
             this.socket = socket;
             this.jugadores = jugadores;
@@ -181,15 +181,12 @@ class KillCatcher extends Thread {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             this.life = life;
+            this.ini = ini;
         } catch (IOException ex) {
             Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public boolean getGanador() {
-        return ganador;
-    }
-
+    
     synchronized public boolean incKill(String jugador) throws IOException {
         if (System.currentTimeMillis() > life) {
             return false;
@@ -203,29 +200,28 @@ class KillCatcher extends Thread {
     public void run() {
         String jugador;
         System.out.println("Esperando golpes.");
-        while (true) {
-            try {
-                jugador = in.readUTF();
-                ganador = incKill(jugador);
-                if (ganador) {
-                    out.writeUTF(jugador);
-                } else {
-                    out.writeUTF("-");
-                }
-                out.writeInt(jugadores.get(jugador));
-            } catch (UnknownHostException e) {
-                System.out.println("Sock:" + e.getMessage());
-            } catch (EOFException e) {
-                System.out.println("EOF:" + e.getMessage());
-            } catch (IOException e) {
-                System.out.println("IO:" + e.getMessage());
-            } finally {
-                if (socket != null) {
-                    try {
-                        socket.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        try {
+            jugador = in.readUTF();
+            ganador = incKill(jugador);
+            if (ganador) {
+                out.writeUTF(jugador);
+                ini.reseteaJugadores();
+            } else {
+                out.writeUTF("-");
+            }
+            out.writeInt(jugadores.get(jugador));
+        } catch (UnknownHostException e) {
+            System.out.println("Sock:" + e.getMessage());
+        } catch (EOFException e) {
+            System.out.println("EOF:" + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO:" + e.getMessage());
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(KillCatcher.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

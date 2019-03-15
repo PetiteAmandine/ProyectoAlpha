@@ -6,6 +6,10 @@
 package cliente;
 
 import comunes.Conexiones;
+import sun.audio.*;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +22,6 @@ public class InicioJuego extends javax.swing.JFrame {
      */
     public InicioJuego() {
         initComponents();
-
     }
 
     /**
@@ -56,6 +59,7 @@ public class InicioJuego extends javax.swing.JFrame {
         jButton1.setAlignmentY(0.0F);
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
         jButton1.setBorderPainted(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setName("botonInicio"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,9 +91,10 @@ public class InicioJuego extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Retro Gaming", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("MONSTER HAVEN");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(60, 10, 240, 50);
+        jLabel2.setBounds(0, 10, 330, 50);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cliente/imagenes/fondoSmol.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -152,7 +157,18 @@ public class InicioJuego extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InicioJuego().setVisible(true);
+                try {
+                    new InicioJuego().setVisible(true);
+                    InputStream in = null;
+                    String cancion = "C:/Users/Amandine/Documents/ITAM/8vo Semestre/Sistemas Distribuidos/ProyectoAlpha/src/cliente/gigue.wav";
+                    in = new FileInputStream(cancion);
+                    AudioStream as = new AudioStream(in);
+                    AudioPlayer.player.start(as);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(InicioJuego.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(InicioJuego.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

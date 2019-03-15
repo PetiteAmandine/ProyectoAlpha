@@ -44,7 +44,9 @@ public class MonstCatcher extends Thread {
                 pj.pintaMonstruo(monstAnt, false);
                 res = messageIn.getData();
                 pos = new String(res).trim();
-                monstNum = Integer.parseInt(pos) > 12 ? 1 : Integer.parseInt(pos);
+                int aux = Integer.parseInt(pos);
+                pos = aux > 12 ? new String(res).trim().charAt(0) + "" : pos;
+                monstNum = Integer.parseInt(pos);
                 System.out.println(monstNum);
                 pj.pintaMonstruo(monstNum, true);
                 monstAnt = monstNum;

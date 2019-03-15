@@ -13,13 +13,12 @@ import java.util.Random;
  * @author velasam
  */
 public class Monstruo {
-    private int posicion;
-    private int tiempoVida;
+    private int posicion, tiempoVida;
 
     public Monstruo() {
         Random r = new Random(System.currentTimeMillis());
         posicion = r.nextInt(12) + 1;
-        tiempoVida = r.nextInt(3) + 3;
+        tiempoVida = r.nextInt(3) + 1;
     }
 
     public int getPosicion() {
