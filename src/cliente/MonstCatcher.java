@@ -44,7 +44,7 @@ public class MonstCatcher extends Thread {
                 pj.pintaMonstruo(monstAnt, false);
                 res = messageIn.getData();
                 pos = new String(res).trim();
-                if (pos.contains("---")) {
+                if (pos.contains("-")) {
                     clientSocket.receive(messageIn);
                     res = messageIn.getData();
                     String ganador =  new String(res).trim();

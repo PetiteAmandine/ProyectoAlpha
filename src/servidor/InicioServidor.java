@@ -31,14 +31,10 @@ import java.util.logging.Logger;
 public class InicioServidor implements Registro {
 
     private HashMap<String, Integer> jugadores;
-    private HashMap<String, Integer> puertos;
-    private int puertoAct;
     private boolean ganador;
 
     public InicioServidor() throws RemoteException {
         jugadores = new HashMap<>();
-        puertos = new HashMap<>();
-        puertoAct = 1000;
         ganador = false;
         LocateRegistry.createRegistry(1099);
         creaEngine();
@@ -50,10 +46,6 @@ public class InicioServidor implements Registro {
 
     public void reseteaJugadores() {
         jugadores = new HashMap<>();
-    }
-
-    public HashMap<String, Integer> getPuertos() {
-        return puertos;
     }
 
     public boolean getGanador() {
@@ -69,10 +61,8 @@ public class InicioServidor implements Registro {
         Conexiones c = null;
         if (!jugadores.containsKey(nombre)) {
             jugadores.put(nombre, 0);
-            puertos.put(nombre, puertoAct);
-            c = new Conexiones(nombre, "228.5.6.7", 6789, "127.0.0.1", 1000);
-            puertoAct++;
         }
+        c = new Conexiones(nombre, "228.5.6.7", 6789, "127.0.0.1", 1000);
         return c;
     }
 
@@ -101,7 +91,7 @@ public class InicioServidor implements Registro {
             mos.start();
             while (true) {
                 Socket socket = ss.accept();
-                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), me.getPuertos(), mos.getLife(), me, mos);
+                KillCatcher kc = new KillCatcher(socket, me.getJugadores(), mos.getLife(), me, mos);
                 kc.start();
             }
         } catch (IOException ex) {
@@ -136,17 +126,14 @@ class MonstSender extends Thread {
         DatagramPacket messageOut;
         try {
             System.out.println("Enviando ganador.");
-            m = "---".getBytes();
+            m = "-".getBytes();
             messageOut = new DatagramPacket(m, m.length, group, 6789);
             clientSocket.send(messageOut);
             m = ganador.getBytes();
             messageOut = new DatagramPacket(m, m.length, group, 6789);
             clientSocket.send(messageOut);
-            Thread.sleep(3000);
         } catch (IOException ex) {
             Logger.getLogger(InicioServidor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MonstSender.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -187,17 +174,15 @@ class KillCatcher extends Thread {
     DataInputStream in;
     DataOutputStream out;
     HashMap<String, Integer> jugadores;
-    HashMap<String, Integer> puertos;
     final int nec = 3;
     boolean ganador = false;
     InicioServidor ini;
     MonstSender ms;
 
-    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, HashMap<String, Integer> puertos, long life, InicioServidor ini, MonstSender ms) {
+    public KillCatcher(Socket socket, HashMap<String, Integer> jugadores, long life, InicioServidor ini, MonstSender ms) {
         try {
             this.socket = socket;
             this.jugadores = jugadores;
-            this.puertos = puertos;
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             this.life = life;
@@ -226,7 +211,6 @@ class KillCatcher extends Thread {
             ganador = incKill(jugador);
             out.writeInt(jugadores.get(jugador));
             if (ganador) {
-                //out.writeUTF(jugador);
                 ms.enviaGanador(jugador);
                 ini.reseteaJugadores();
             } else {
