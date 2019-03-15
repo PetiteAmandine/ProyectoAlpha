@@ -32,7 +32,7 @@ public class KillSender extends Thread {
         clientSocket = null;
         try {
             clientSocket = new Socket(con.getTcpIP(), con.getTcpPort());
-            System.out.println("Me conecté a TCP.");
+            //System.out.println("Me conecté a TCP.");
             jugador = con.getUser();
             in = new DataInputStream(clientSocket.getInputStream());
             out = new DataOutputStream(clientSocket.getOutputStream());

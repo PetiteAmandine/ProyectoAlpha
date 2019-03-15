@@ -95,7 +95,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             KillSender ks = new KillSender(con);
             ks.start();
             ks.join();
-            System.out.println("Golpe enviado.");
+            //System.out.println("Golpe enviado.");
             editaVictimas("" + ks.getVictimas());
             String ganador = ks.getGanador();
             if (ganador != null && !ganador.equals("-")) {
@@ -107,6 +107,39 @@ public class PantallaJuego extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    public int prendidos(){
+        int resp=0;
+        if(monst1.isEnabled())
+            resp=1;
+        else if(monst2.isEnabled())
+            resp=2;
+        else if(monst3.isEnabled())
+            resp=3;
+        else if(monst4.isEnabled())
+            resp=4;
+        else if(monst5.isEnabled())
+            resp=5;
+        else if(monst6.isEnabled())
+            resp=6;
+        else if(monst7.isEnabled())
+            resp=7;
+        else if(monst8.isEnabled())
+            resp=8;
+        else if(monst9.isEnabled())
+            resp=9;
+        else if(monst10.isEnabled())
+            resp=10;
+        else if(monst11.isEnabled())
+            resp=11;
+        else if(monst12.isEnabled())
+            resp=12;
+        return resp;
+    }
+    
+    public boolean vict(){
+        return victoria.isVisible();
     }
     
     

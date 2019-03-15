@@ -75,7 +75,7 @@ public class InicioServidor implements Registro {
     }
 
     public void creaEngine() {
-        System.setProperty("java.security.policy", "C:/Users/Amandine/Documents/ITAM/8vo Semestre/Sistemas Distribuidos/ProyectoAlpha/src/servidor/server.policy");
+        System.setProperty("java.security.policy", "C:/Users/Eduardo/ProyectoAlpha/src/servidor/server.policy");
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }

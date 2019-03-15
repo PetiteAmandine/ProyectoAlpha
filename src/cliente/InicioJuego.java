@@ -70,7 +70,7 @@ public class InicioJuego extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 153));
         jLabel3.setText("Nombre:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(50, 120, 70, 18);
+        jLabel3.setBounds(50, 120, 70, 19);
 
         username.setBackground(new java.awt.Color(255, 255, 255, 0));
         username.setFont(new java.awt.Font("Retro Gaming", 0, 14)); // NOI18N
@@ -155,6 +155,14 @@ public class InicioJuego extends javax.swing.JFrame {
                 new InicioJuego().setVisible(true);
             }
         });
+    }
+    
+    public void usuario(String user){
+        username.setText(user);
+    }
+    
+    public void boton(){
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
